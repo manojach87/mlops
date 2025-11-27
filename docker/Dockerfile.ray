@@ -1,0 +1,11 @@
+FROM python:3.9-slim
+
+WORKDIR /app
+
+RUN pip install ray[default] mlflow scikit-learn numpy
+
+COPY ../mlflow/code/ /app/
+
+EXPOSE 8265 10001
+
+CMD ["ray", "start", "--head", "--dashboard-host=0.0.0.0", "--block"]
