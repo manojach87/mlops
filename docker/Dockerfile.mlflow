@@ -1,0 +1,13 @@
+FROM python:3.9-slim
+
+WORKDIR /app
+
+RUN pip install mlflow
+
+RUN mkdir -p /app_logs /app_data /app_code /app_temp
+
+VOLUME ["/app_logs", "/app_data", "/app_code", "/app_temp"]
+
+EXPOSE 5000
+
+CMD ["mlflow", "server", "--host", "0.0.0.0", "--port", "5000", "--backend-store-uri", "file:///app_data", "--default-artifact-root", "/app_logs"]
