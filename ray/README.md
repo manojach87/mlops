@@ -38,6 +38,15 @@ docker exec -it ray-server bash -lc "cd /app_code/mlops && \
 This uses the `/app_data` mount for inputs and logs artifacts/metrics to the MLflow server running on the host (reachable from the container as `host.docker.internal`). Model and metrics files remain on the host under `models/` and `reports/`.
 > If `host.docker.internal` is unavailable on your Docker setup, replace it with the host gateway IP (commonly `172.17.0.1`).
 
+### Run the Sales-Flag Classifier
+```bash
+docker exec -it ray-server bash -lc "cd /app_code/mlops && \
+  cp data_templates/sales_flag_sample.csv /app_data/raw/sales_flag.csv && \
+  ML_DATA_ROOT=/app_data \
+  MLFLOW_TRACKING_URI=http://host.docker.internal:5000 \
+  python3 src/models/train_sales_flag_model.py"
+```
+
 ## Stop and Cleanup
 ```bash
 docker stop ray-server

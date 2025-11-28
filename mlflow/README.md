@@ -37,6 +37,16 @@ python3 src/models/train_sales_model.py
 ```
 Adjust `MLFLOW_TRACKING_URI` if your server listens on a different address.
 
+### Train the XGBoost Sales-Flag Classifier
+Seed sample data if you don't already have `sales_flag.csv`, then run the classifier script:
+```bash
+cp data_templates/sales_flag_sample.csv ../data/mlops/raw/sales_flag.csv
+
+MLFLOW_TRACKING_URI=http://127.0.0.1:5000 \
+ML_DATA_ROOT=../data/mlops \
+python3 src/models/train_sales_flag_model.py
+```
+
 ## Stop and Cleanup
 ```bash
 docker stop mlflow-server
